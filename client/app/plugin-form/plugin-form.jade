@@ -1,0 +1,12 @@
+form.well(data-ng-show="isAdmin()")
+    .form-group
+        label Title
+
+        input.form-control(type="text", placeholder="Title", data-ng-model="page.title")
+
+    .form-group
+        label Link
+
+        input.form-control(type="text", placeholder="Link", data-ng-model="page.link")
+
+    button.btn.btn-primary(type="submit", data-ng-click="editPage()") Add New

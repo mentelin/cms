@@ -1,20 +1,27 @@
 div(data-ng-include="'components/navbar/navbar.html'")
 
 .container
-    h1.page-header {{ page.title }}
-        button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×
+    h1.plugin-header {{ plugin.name }}
+        button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePlugin(plugin)") ×
 
-    p Link: {{ page.link }}
+    p Order: {{ plugin.order }}
+    p Page id: {{ plugin.idPage }}
 
     form.well(data-ng-show="isAdmin()")
         .form-group
-            label Title
+            label Name
 
-            input.form-control(type="text", placeholder="Title", data-ng-model="page.title")
+            input.form-control(type="text", placeholder="Name", data-ng-model="plugin.name")
 
         .form-group
-            label Link
+            label Page id
 
-            input.form-control(type="text", placeholder="Link", data-ng-model="page.link")
+            select.form-control(data-ng-repeat="page in pages", data-ng-model="plugin.idPage")
+                option(value="{{ page._id }}") {{ page.title }}
 
-        button.btn.btn-primary(type="submit", data-ng-click="editPage()") Add New
+        .form-group
+            label Plugin order
+
+            input.form-control(type="nubmer", placeholder="Plugin order", data-ng-model="plugin.order")
+
+        button.btn.btn-primary(type="submit", data-ng-click="editPlugin()") Add New

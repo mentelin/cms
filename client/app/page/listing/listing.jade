@@ -20,6 +20,6 @@ div(data-ng-include="'components/navbar/navbar.html'")
         li.list-group-item(data-ng-repeat="page in pages")
             span {{ $index + 1 }}.&ensp;
 
-            a(href="/{{ page.link }}", title="{{ page.title }}") {{ page.title }}
+            a(href="/pages/{{ page.link }}", title="{{ page.title }}") {{ page.title }}
 
             button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×

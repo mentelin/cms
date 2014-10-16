@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
 var PluginSchema = new Schema({
   name: String,
-  idPage: String
+  idPage: String,
+  order: String
 });
 
 module.exports = mongoose.model('Plugin', PluginSchema);

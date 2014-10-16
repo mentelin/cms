@@ -8,10 +8,14 @@ angular.module('cmsApp')
 
     $http.get('/api/pages').success(function (pages) {
       for (var key in pages) {
-        var object = pages[key].link;
-
-        if (object === link) {
+        if (pages[key].link === link) {
           $scope.page = pages[key];
+        }
+        else {
+          $scope.page = {
+            'title': '404 page not found',
+            'link': link
+          };
         }
       }
 
@@ -21,7 +25,7 @@ angular.module('cmsApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
 
-    $scope.editBook = function (page) {
+    $scope.editPage = function (page) {
       $http.put('/api/pages/' + page._id, {
         title: page.title,
         link: page.link

@@ -1,25 +1,33 @@
 div(data-ng-include="'components/navbar/navbar.html'")
 
 .container
-    h1.page-header Pages
+    h1.page-header Plugin
 
     form.well(data-ng-show="isAdmin()")
         .form-group
-            label Title
+            label Name
 
-            input.form-control(type="text", placeholder="Title", data-ng-model="newPage.title")
+            input.form-control(type="text", placeholder="Name", data-ng-model="newPlugin.name")
 
         .form-group
-            label Link
+            label Page id
 
-            input.form-control(type="text", placeholder="Link", data-ng-model="newPage.link")
+            select.form-control(data-ng-repeat="page in pages", data-ng-model="newPlugin.idPage")
+                option(value="{{ page._id }}") {{ page.title }}
 
-        button.btn.btn-primary(type="submit", data-ng-click="addPage()") Add New
+        .form-group
+            label Plugin order
+
+            input.form-control(type="nubmer", placeholder="Plugin order", data-ng-model="newPlugin.order")
+
+        button.btn.btn-primary(type="submit", data-ng-click="addPlugin()") Add New
 
     ul.list-group
-        li.list-group-item(data-ng-repeat="page in pages")
-            span {{ $index + 1 }}.&ensp;
+        li.list-group-item(data-ng-repeat="plugin in plugins | orderBy:predicate")
+            span {{ plugin.order }}.&ensp;
 
-            a(href="/{{ page.link }}", title="{{ page.title }}") {{ page.title }}
+            button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePlugin(plugin)") ×
 
-            button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×
+            a(data-ng-href="/plugins/{{ plugin._id }}", title="{{ plugin.name }}") {{ plugin.name }}
+
+            p {{ plugin.idPage }}
