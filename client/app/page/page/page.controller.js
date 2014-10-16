@@ -4,7 +4,9 @@ angular.module('cmsApp')
   .controller('PageCtrl', function ($scope, $http, $stateParams, socket, Auth) {
     var link = $stateParams.link;
 
+    $scope.plugins = [];
     $scope.page = [];
+    $scope.predicate = 'order';
 
     $http.get('/api/pages').success(function (pages) {
       for (var key in pages) {
@@ -20,6 +22,16 @@ angular.module('cmsApp')
       }
 
       socket.syncUpdates('page', $scope.page);
+    });
+
+    $http.get('/api/plugins').success(function (plugins) {
+      for (var key in plugins) {
+        if (plugins[key].idPage === $scope.page._id) {
+          $scope.plugins.push(plugins[key]);
+        }
+      }
+
+      socket.syncUpdates('plugin', $scope.plugins);
     });
 
     $scope.isLoggedIn = Auth.isLoggedIn;
