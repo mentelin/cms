@@ -9,7 +9,7 @@ angular.module('cmsApp')
         controller: 'PageListingCtrl'
       })
       .state('page', {
-        url: '/pages/:link',
+        url: '/:link',
         templateUrl: 'app/page/page/page.html',
         controller: 'PageCtrl'
       });
