@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('cmsApp')
-  .controller('PageListingCtrl', function ($scope, $http, socket, Auth) {
+  .controller('PageListingCtrl', function ($scope, $http, socket, Auth, $rootScope) {
     $scope.pages = [];
+
+    $rootScope.title = 'Pages';
 
     $http.get('/api/pages').success(function (pages) {
       $scope.pages = pages;

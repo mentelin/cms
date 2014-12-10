@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('cmsApp')
-  .controller('PageCtrl', function ($scope, $http, $stateParams, socket, Auth) {
+  .controller('PageCtrl', function ($scope, $http, $stateParams, socket, Auth, $rootScope) {
     var link = $stateParams.link;
+
+    $rootScope.title = $scope.page.title;
 
     $scope.plugins = [];
     $scope.page = [];
@@ -15,8 +17,8 @@ angular.module('cmsApp')
         }
         else {
           $scope.page = {
-            'title': '404 page not found',
-            'link': link
+            title: '404 page not found',
+            link: link
           };
         }
       }
