@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
 var PageSchema = new Schema({
   title: String,
-  link: String
+  link: String,
+  parent: String
 });
 
 module.exports = mongoose.model('Page', PageSchema);

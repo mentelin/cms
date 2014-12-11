@@ -2,26 +2,46 @@
 
 angular.module('cmsApp')
   .controller('PageCtrl', function ($scope, $http, $stateParams, socket, Auth, $rootScope) {
-    var link = $stateParams.link;
+    var parent = $stateParams.parent,
+        link = $stateParams.link,
+        notFound = {
+          title: '404 page not found',
+          link: link
+        };
 
-    $rootScope.title = $scope.page.title;
-
-    $scope.plugins = [];
     $scope.page = [];
+    $scope.parents = [];
+    $scope.childs = [];
+    $scope.plugins = [];
     $scope.predicate = 'order';
 
     $http.get('/api/pages').success(function (pages) {
       for (var key in pages) {
-        if (pages[key].link === link) {
-          $scope.page = pages[key];
+        if (pages[key].parent === parent) {
+          if (pages[key].link === link) {
+            $scope.page = pages[key];
+          }
         }
         else {
-          $scope.page = {
-            title: '404 page not found',
-            link: link
-          };
+          if (pages[key].link === link) {
+            $scope.page = pages[key];
+          }
+        }
+
+        if (typeof pages[key].parent !== 'undefined') {
+          $scope.childs.push(pages[key]);
+        }
+
+        if (pages[key].link !== link) {
+          $scope.parents.push(pages[key].title);
         }
       }
+
+      if ($scope.page.length === 0) {
+        $scope.page = notFound;
+      }
+
+      $rootScope.title = $scope.page.title;
 
       socket.syncUpdates('page', $scope.page);
     });
@@ -42,7 +62,8 @@ angular.module('cmsApp')
     $scope.editPage = function (page) {
       $http.put('/api/pages/' + page._id, {
         title: page.title,
-        link: page.link
+        link: page.link,
+        parent: page.parent
       });
     };
 

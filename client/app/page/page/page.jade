@@ -15,3 +15,10 @@ div(data-ng-include="'components/navbar/navbar.html'")
 
             p {{ plugin.idPage }}
 
+    ul.list-group
+        li.list-group-item(data-ng-repeat="page in childs")
+            span {{ $index + 1 }}.&ensp;
+
+            a(data-ng-href="{{ getURL(page.parent.title, page.link) }}", title="{{ page.title }}") {{ page.title }}
+
+            button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×

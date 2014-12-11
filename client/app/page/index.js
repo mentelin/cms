@@ -12,5 +12,10 @@ angular.module('cmsApp')
         url: '/:link',
         templateUrl: 'app/page/page/page.html',
         controller: 'PageCtrl'
+      })
+      .state('pageSecond', {
+        url: '/:parent/:link',
+        templateUrl: 'app/page/page/page.html',
+        controller: 'PageCtrl'
       });
   });

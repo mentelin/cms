@@ -7,7 +7,13 @@ div(data-ng-include="'components/navbar/navbar.html'")
         .form-group
             label Title
 
-            input.form-control(type="text", placeholder="Title", data-ng-model="newPage.title")
+            input.form-control(type="text", placeholder="Title", data-ng-model="newPage.title", data-ng-change="setLink(newPage.title)")
+
+        .form-group
+            label Parent
+
+            select.form-control(data-ng-model="newPage.parent")
+                option(data-ng-repeat="parent in parents", value="{{ parent._id }}") {{ parent.title }}
 
         .form-group
             label Link
@@ -20,6 +26,10 @@ div(data-ng-include="'components/navbar/navbar.html'")
         li.list-group-item(data-ng-repeat="page in pages")
             span {{ $index + 1 }}.&ensp;
 
-            a(href="/{{ page.link }}", title="{{ page.title }}") {{ page.title }}
+            a(data-ng-href="{{ getURL(page.parent.title, page.link) }}", title="{{ page.title }}") {{ page.title }}
+
+            br
+
+            span(data-ng-show="page.parent") {{ page.parent }}
 
             button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×
