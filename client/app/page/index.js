@@ -9,12 +9,7 @@ angular.module('cmsApp')
         controller: 'PageListingCtrl'
       })
       .state('page', {
-        url: '/:link',
-        templateUrl: 'app/page/page/page.html',
-        controller: 'PageCtrl'
-      })
-      .state('pageSecond', {
-        url: '/:parent/:link',
+        url: '/{path:.*}',
         templateUrl: 'app/page/page/page.html',
         controller: 'PageCtrl'
       });

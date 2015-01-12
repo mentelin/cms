@@ -2,28 +2,37 @@
 
 angular.module('cmsApp')
   .controller('PageCtrl', function ($scope, $http, $stateParams, socket, Auth, $rootScope) {
-    var parent = $stateParams.parent,
-        link = $stateParams.link,
+    var path = $stateParams.path,
         notFound = {
           title: '404 page not found',
-          link: link
-        };
+          link: path
+        },
+        pathArr = path.split('/');
+
+    if (typeof pathArr[pathArr.length - 1] === 'undefined') {
+      pathArr = pathArr.slice(0, -1);
+    }
 
     $scope.page = [];
+    $scope.pages = [];
     $scope.parents = [];
     $scope.childs = [];
     $scope.plugins = [];
     $scope.predicate = 'order';
 
     $http.get('/api/pages').success(function (pages) {
+      $scope.pages = pages;
+
       for (var key in pages) {
-        if (pages[key].parent === parent) {
-          if (pages[key].link === link) {
-            $scope.page = pages[key];
+        if (pathArr.length > 1) {
+          for (var i = pathArr.length - 1; i >= 0; i--) {
+            if (pages[key].link === pathArr[i]) {
+              $scope.page = pages[key];
+            }
           }
         }
         else {
-          if (pages[key].link === link) {
+          if (pages[key].link === pathArr[0]) {
             $scope.page = pages[key];
           }
         }
@@ -32,7 +41,7 @@ angular.module('cmsApp')
           $scope.childs.push(pages[key]);
         }
 
-        if (pages[key].link !== link) {
+        if (pages[key].link !== pathArr[pathArr.length - 1]) {
           $scope.parents.push(pages[key].title);
         }
       }
@@ -69,6 +78,30 @@ angular.module('cmsApp')
 
     $scope.deletePage = function (page) {
       $http.delete('/api/pages/' + page._id);
+    };
+
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('page');
+    });
+
+    $scope.getURL = function (parent, link) {
+      if (typeof parent !== 'undefined') {
+        return '/' + $scope.getTitle(parent) + '/' + link;
+      }
+
+      return '/' + link;
+    };
+
+    $scope.getTitle = function (id) {
+      for (var key in $scope.pages) {
+        if ($scope.pages[key]._id = id) {
+          return $scope.pages[key].title;
+        }
+      }
+    };
+
+    $scope.setLink = function (link) {
+      $scope.newPage.link = link.replace(/\s+/g, '-').toLowerCase();
     };
 
     $scope.$on('$destroy', function () {

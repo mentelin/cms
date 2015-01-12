@@ -48,10 +48,18 @@ angular.module('cmsApp')
 
     $scope.getURL = function (parent, link) {
       if (typeof parent !== 'undefined') {
-        return '/' + parent + '/' + link;
+        return '/' + $scope.getTitle(parent) + '/' + link;
       }
 
       return '/' + link;
+    };
+
+    $scope.getTitle = function (id) {
+      for (var key in $scope.pages) {
+        if ($scope.pages[key]._id = id) {
+          return $scope.pages[key].title;
+        }
+      }
     };
 
     $scope.setLink = function (link) {
