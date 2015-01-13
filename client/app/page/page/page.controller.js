@@ -94,7 +94,7 @@ angular.module('cmsApp')
 
     $scope.getTitle = function (id) {
       for (var key in $scope.pages) {
-        if ($scope.pages[key]._id = id) {
+        if ($scope.pages[key]._id === id) {
           return $scope.pages[key].title;
         }
       }

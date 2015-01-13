@@ -8,6 +8,7 @@ angular.module('cmsApp')
       },
       restrict: 'EA',
       link: function (scope, element, attrs) {
+        console.log(scope, element, attrs);
       }
     };
   });
