@@ -10,10 +10,7 @@ angular.module('cmsApp')
 
     $http.get('/api/pages').success(function (pages) {
       $scope.pages = pages;
-
-      for (var key in pages) {
-        $scope.parents.push(pages[key]);
-      }
+      $scope.parents = pages;
 
       socket.syncUpdates('page', $scope.pages);
     });
@@ -48,7 +45,7 @@ angular.module('cmsApp')
 
     $scope.getURL = function (parent, link) {
       if (typeof parent !== 'undefined') {
-        return '/' + $scope.getTitle(parent) + '/' + link;
+        return '/' + $scope.getLink(parent) + '/' + link;
       }
 
       return '/' + link;
@@ -58,6 +55,14 @@ angular.module('cmsApp')
       for (var key in $scope.pages) {
         if ($scope.pages[key]._id === id) {
           return $scope.pages[key].title;
+        }
+      }
+    };
+
+    $scope.getLink = function (id) {
+      for (var key in $scope.pages) {
+        if ($scope.pages[key]._id === id) {
+          return $scope.pages[key].link;
         }
       }
     };
