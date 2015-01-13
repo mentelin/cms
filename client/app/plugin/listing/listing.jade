@@ -12,8 +12,8 @@ div(data-ng-include="'components/navbar/navbar.html'")
         .form-group
             label Page id
 
-            select.form-control(data-ng-repeat="page in pages", data-ng-model="newPlugin.idPage")
-                option(value="{{ page._id }}") {{ page.title }}
+            select.form-control(data-ng-model="newPlugin.idPage")
+                option(value="{{ page._id }}", data-ng-repeat="page in pages") {{ page.title }}
 
         .form-group
             label Plugin order

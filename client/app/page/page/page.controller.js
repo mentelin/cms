@@ -37,12 +37,14 @@ angular.module('cmsApp')
           }
         }
 
-        if (typeof pages[key].parent !== 'undefined') {
-          $scope.childs.push(pages[key]);
-        }
-
         if (pages[key].link !== pathArr[pathArr.length - 1]) {
           $scope.parents.push(pages[key].title);
+        }
+      }
+
+      for (var val in pages) {
+        if (typeof pages[val].parent !== 'undefined' && pages[val].parent === $scope.page._id) {
+          $scope.childs.push(pages[val]);
         }
       }
 
@@ -86,7 +88,7 @@ angular.module('cmsApp')
 
     $scope.getURL = function (parent, link) {
       if (typeof parent !== 'undefined') {
-        return '/' + $scope.getTitle(parent) + '/' + link;
+        return '/' + $scope.getLink(parent) + '/' + link;
       }
 
       return '/' + link;
@@ -96,6 +98,14 @@ angular.module('cmsApp')
       for (var key in $scope.pages) {
         if ($scope.pages[key]._id === id) {
           return $scope.pages[key].title;
+        }
+      }
+    };
+
+    $scope.getLink = function (id) {
+      for (var key in $scope.pages) {
+        if ($scope.pages[key]._id === id) {
+          return $scope.pages[key].link;
         }
       }
     };

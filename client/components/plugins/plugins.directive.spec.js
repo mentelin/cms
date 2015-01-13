@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: pluginForm', function () {
+describe('Directive: plugin', function () {
 
   // load the directive's module and view
   beforeEach(module('cmsApp'));

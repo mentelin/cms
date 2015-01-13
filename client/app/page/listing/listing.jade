@@ -29,5 +29,5 @@ div(data-ng-include="'components/navbar/navbar.html'")
             span {{ $index + 1 }}.&ensp;
 
             a(data-ng-href="{{ getURL(page.parent, page.link) }}", title="{{ page.title }}")
-                span(data-ng-show="page.parent") /{{ getTitle(page.parent) }}
-                | /{{ page.title }}
+                span(data-ng-show="page.parent") /{{ getLink(page.parent) }}
+                | /{{ page.link }}
