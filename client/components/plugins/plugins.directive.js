@@ -3,9 +3,13 @@
 angular.module('cmsApp')
   .directive('plugin', function () {
     return {
-      templateUrl: function (el, attr) {
-        return 'components/plugins/' + attr.type + '/' + attr.type + '.html';
+      link: function (scope, element, attrs) {
+        scope.contentUrl = 'components/plugins/' + attrs.type + '/' + attrs.type + '.html';
+
+        attrs.$observe('type', function (type) {
+          scope.contentUrl = 'components/plugins/' + type + '/' + type + '.html';
+        });
       },
-      restrict: 'EA'
+      template: '<div ng-include="contentUrl"></div>'
     };
   });

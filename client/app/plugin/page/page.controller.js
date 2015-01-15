@@ -22,8 +22,9 @@ angular.module('cmsApp')
 
     $scope.editPlugin = function (plugin) {
       $http.put('/api/plugins/' + plugin._id, {
-        title: plugin.title,
-        link: plugin.link
+        name: plugin.name,
+        idPage: plugin.idPage,
+        order: plugin.order
       });
     };
 
