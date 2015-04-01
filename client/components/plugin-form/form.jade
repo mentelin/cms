@@ -1,0 +1,18 @@
+form.well(data-ng-show="content.isAdmin()")
+    .form-group
+        label Title
+
+        input.form-control(type="text", placeholder="Title", data-ng-model="content.page.title")
+
+    .form-group
+        label Parent
+
+        select.form-control(data-ng-model="content.page.parent")
+            option(data-ng-repeat="parent in content.parents", value="{{ parent }}") {{ parent }}
+
+    .form-group
+        label Link
+
+        input.form-control(type="text", placeholder="Link", data-ng-model="content.page.link")
+
+    button.btn.btn-primary(type="submit", data-ng-click="content.editPage(content.page)") Add New

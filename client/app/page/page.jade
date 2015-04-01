@@ -1,0 +1,4 @@
+div(ng-include="'components/navbar/navbar.html'")
+
+.container
+    div(plugin, name="{{ plugin.name }}", content="pageCtrl", ng-repeat="plugin in pageCtrl.plugins | orderBy:pageCtrl.predicate")

@@ -1,0 +1,33 @@
+div(ng-include="'components/navbar/navbar.html'")
+
+.container
+    h1.page-header Plugin
+
+    form.well(ng-show="pluginListingCtrl.isAdmin()")
+        .form-group
+            label Name
+
+            input.form-control(type="text", placeholder="Name", ng-model="pluginListingCtrl.newPlugin.name")
+
+        .form-group
+            label Page id
+
+            select.form-control(ng-model="pluginListingCtrl.newPlugin.idPage")
+                option(value="{{ page._id }}", ng-repeat="page in pluginListingCtrl.pages") {{ page.title }}
+
+        .form-group
+            label Plugin order
+
+            input.form-control(type="nubmer", placeholder="Plugin order", ng-model="pluginListingCtrl.newPlugin.order")
+
+        button.btn.btn-primary(type="submit", ng-click="pluginListingCtrl.addPlugin()") Add New
+
+    ul.list-group
+        li.list-group-item(ng-repeat="plugin in pluginListingCtrl.plugins | orderBy:pluginListingCtrl.predicate")
+            span {{ plugin.order }}.&ensp;
+
+            button.close(type="button", ng-show="pluginListingCtrl.isAdmin()", ng-click="pluginListingCtrl.deletePlugin(plugin)") ×
+
+            a(ng-href="/plugins/{{ plugin._id }}", title="{{ plugin.name }}") {{ plugin.name }}
+
+            p {{ plugin.idPage }}

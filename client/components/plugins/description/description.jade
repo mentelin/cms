@@ -1,6 +1,0 @@
-h1.page-header {{ page.title }}
-    button.close(type="button", data-ng-show="isAdmin()", data-ng-click="deletePage(page)") ×
-
-p Link:
-    span(data-ng-show="page.parent") /{{ getLink(page.parent) }}
-    | /{{ page.link }}

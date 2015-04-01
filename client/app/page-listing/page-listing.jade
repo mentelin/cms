@@ -1,0 +1,33 @@
+div(ng-include="'components/navbar/navbar.html'")
+
+.container
+    h1.page-header Pages
+
+    form.well(ng-show="pageListingCtrl.isAdmin()")
+        .form-group
+            label Title
+
+            input.form-control(type="text", placeholder="Title", ng-model="pageListingCtrl.newPage.title", ng-change="pageListingCtrl.setLink(pageListingCtrl.newPage.title)")
+
+        .form-group
+            label Parent
+
+            select.form-control(ng-model="pageListingCtrl.newPage.parent")
+                option(ng-repeat="parent in pageListingCtrl.parents", value="{{ parent._id }}") {{ parent.title }}
+
+        .form-group
+            label Link
+
+            input.form-control(type="text", placeholder="Link", ng-model="pageListingCtrl.newPage.link")
+
+        button.btn.btn-primary(type="submit", ng-click="pageListingCtrl.addPage()") Add New
+
+    ul.list-group
+        li.list-group-item(ng-repeat="page in pageListingCtrl.pages")
+            button.close(type="button", ng-show="pageListingCtrl.isAdmin()", ng-click="pageListingCtrl.deletePage(page)") ×
+
+            span {{ $index + 1 }}.&ensp;
+
+            a(ng-href="{{ pageListingCtrl.getURL(page.parent, page.link, pageListingCtrl.pages) }}", title="{{ page.title }}")
+                span(ng-show="page.parent") /{{ pageListingCtrl.getLink(page.parent, pageListingCtrl.pages) }}
+                | /{{ page.link }}

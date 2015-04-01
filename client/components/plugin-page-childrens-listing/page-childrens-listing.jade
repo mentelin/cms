@@ -1,0 +1,9 @@
+ul.list-group
+    li.list-group-item(ng-repeat="plugin in content.plugins | orderBy:content.predicate")
+        span {{ plugin.order }}.&ensp;
+
+        button.close(type="button", ng-show="content.isAdmin()", ng-click="content.deletePlugin(plugin)") ×
+
+        a(ng-href="/plugins/{{ plugin._id }}", title="{{ plugin.name }}") {{ plugin.name }}
+
+        p {{ plugin.idPage }}

@@ -1,11 +1,15 @@
-'use strict';
+(function (angular) {
+  'use strict';
 
-angular.module('cmsApp')
-  .config(function ($stateProvider) {
-    $stateProvider
-      .state('main', {
-        url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
-      });
-  });
+  var config = function ($stateProvider) {
+    $stateProvider.state('main', {
+      url: '/',
+      templateUrl: 'app/main/main.html',
+      controller: 'MainCtrl',
+      controllerAs: 'mainCtrl'
+    });
+  };
+
+  angular.module('cmsApp')
+    .config(config);
+})(window.angular);

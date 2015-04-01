@@ -1,0 +1,9 @@
+ul.list-group
+    li.list-group-item(ng-repeat="page in content.childs")
+        button.close(type="button", ng-show="content.isAdmin()", ng-click="content.deletePage(page)") ×
+
+        span {{ $index + 1 }}.&ensp;
+
+        a(ng-href="{{ content.getURL(page.parent, page.link, content.pages) }}", title="{{ page.title }}")
+            span(ng-show="page.parent") /{{ content.getLink(page.parent, content.pages) }}
+            | /{{ page.link }}

@@ -1,0 +1,27 @@
+div(ng-include="'components/navbar/navbar.html'")
+
+.container
+    h1.plugin-header {{ pluginCtrl.plugin.name }}
+        button.close(type="button", ng-show="pluginCtrl.isAdmin()", ng-click="pluginCtrl.deletePlugin(plugin)") ×
+
+    p Order: {{ pluginCtrl.plugin.order }}
+    p Page id: {{ pluginCtrl.plugin.idPage }}
+
+    form.well(ng-show="pluginCtrl.isAdmin()")
+        .form-group
+            label Name
+
+            input.form-control(type="text", placeholder="Name", ng-model="pluginCtrl.plugin.name")
+
+        .form-group
+            label Page id
+
+            select.form-control(ng-model="pluginCtrl.plugin.idPage")
+                option(value="{{ page._id }}", ng-repeat="page in pluginCtrl.pages") {{ page.title }}
+
+        .form-group
+            label Plugin order
+
+            input.form-control(type="nubmer", placeholder="Plugin order", ng-model="pluginCtrl.plugin.order")
+
+        button.btn.btn-primary(type="submit", ng-click="pluginCtrl.editPlugin(pluginCtrl.plugin)") Save
